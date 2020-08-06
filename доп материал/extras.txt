@@ -1,0 +1,120 @@
+Уточнения. 
+☝️ У кого проблемы с плагином WEBPCSS нужно установить converter командой -
+npm install webp-converter@2.2.3 --save-dev
+☝️ Папка проекта не должна называться gulp
+☝️ Запускать можно и отдельные функции, например gulp css
+☝️ У кого копирует в dist только .jpg попробуйте немного изменить запись форматов с /*.{jpg, png, svg, gif, ico, webp} на /*.+(png|jpg|gif|ico|svg|webp)
+☝️  Для WEBP-CSS следует использовать настройки: webpcss({webpClass: '.webp',noWebpClass: '.no-webp'}
+☝️ WEBP-CSS выдает ошибку если в названии файла картинки есть пробелы и/или кириллица
+
+👉 Ссылки:
+NodeJS - https://nodejs.org/ru/
+Gulp - https://gulpjs.com/
+Форматы изображений в веб-разработке - https://youtu.be/YHV35GiXA-w
+
+👉 БЕСПЛАТНЫЙ курс по верстке сайтов (Front End). Уроки HTML CSS JS: 
+https://www.youtube.com/playlist?list...
+👉Настройка редактора VS Code: 
+https://www.youtube.com/watch?v=nxCLX...
+
+Содержание:
+00:00 - Вступление
+00:58 - Установка Node.js
+02:24 - Работа с терминалом (командной строкой)
+04:02 - Установка Gulp глобально
+04:46 - Создание package.json
+06:53 - Установка Gulp в проект
+08:21 - Создание gulpfile.js, файлов и папок проекта
+10:38 - Первый запуск Gulp
+11:21 - Очистка пакетного менеджера (решение проблем)
+12:16 - Написание "сценария", создание переменных
+19:28 - Обновление браузера
+23:24 - Работа с HTML, подключение других файлов
+35:20 - Удаление папки с результатом
+37:04 - Работа с CSS (SASS/SCSS)
+48:25 - Работа с JavaScript файлами
+52:34 - Работа с изображениями, конвертация в WEBP
+01:05:56 - Работа со шрифтами
+01:15:16 - Запуск нового проекта
+01:16:52 - Важное напутствие!
+
+👉 Страницы плагинов:
+BrowserSync - https://www.browsersync.io/docs/gulp
+File Include - https://www.npmjs.com/package/gulp-fi...
+Del - https://www.npmjs.com/package/del
+Sass - https://www.npmjs.com/package/gulp-sass
+Autoprefixer - https://www.npmjs.com/package/gulp-au...
+Group CSS media-queries - https://www.npmjs.com/package/gulp-gr...
+Rename - https://www.npmjs.com/package/gulp-re...
+Clean CSS - https://www.npmjs.com/package/gulp-cl...
+Uglify ES - https://www.npmjs.com/package/gulp-ug...
+Babel - https://www.npmjs.com/package/gulp-babel
+Imagemin - https://www.npmjs.com/package/gulp-im...
+WEBP - https://www.npmjs.com/package/gulp-webp
+WEBP HTML - https://www.npmjs.com/package/gulp-we...
+WEBP CSS - https://www.npmjs.com/package/gulp-we...
+Fonter - https://www.npmjs.com/package/gulp-fo...
+ttf2woff - https://www.npmjs.com/package/gulp-tt...
+ttf2woff2 - https://www.npmjs.com/package/gulp-tt...
+SVG Sprite - https://www.npmjs.com/search?q=gulp-s...
+
+👉JS функции и миксин из урока:
+http://fls.guru/gulp.html
+
+👉Решение проблем:
+npm cache clean --force (очистака npm)
+npm i npm -g (установка npm)
+
+ЧАСТИ GULP СЦЕНАРИЯ
+SCSS МИКСИН ДЛЯ ПОДКЛЮЧЕНИЯ ШРИФТОВ
+@mixin font($font_name, $file_name, $weight, $style) {
+
+@font-face {
+font-family: $font_name;
+font-display: swap;
+src: url("../fonts/#{$file_name}.woff") format("woff"), url("../fonts/#{$file_name}.woff2") format("woff2");
+font-weight: #{$weight};
+font-style: #{$style};
+}
+}
+
+JS-ФУНКЦИЯ ЗАПИСИ ИНФОРМАЦИИ В FONTS.SCSS
+function fontsStyle(params) {
+
+let file_content = fs.readFileSync(source_folder + '/scss/fonts.scss');
+if (file_content == '') {
+fs.writeFile(source_folder + '/scss/fonts.scss', '', cb);
+return fs.readdir(path.build.fonts, function (err, items) {
+if (items) {
+let c_fontname;
+for (var i = 0; i < items.length; i++) {
+let fontname = items[i].split('.');
+fontname = fontname[0];
+if (c_fontname != fontname) {
+fs.appendFile(source_folder + '/scss/fonts.scss', '@include font("' + fontname + '", "' + fontname + '", "400", "normal");\r\n', cb);
+}
+c_fontname = fontname;
+}
+}
+})
+}
+}
+
+JS-ФУНКЦИЯ ОПРЕДЕЛЕНИЯ ПОДДЕРЖКИ WEBP
+function testWebP(callback) {
+
+var webP = new Image();
+webP.onload = webP.onerror = function () {
+callback(webP.height == 2);
+};
+webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+}
+
+testWebP(function (support) {
+
+if (support == true) {
+document.querySelector('body').classList.add('webp');
+}else{
+document.querySelector('body').classList.add('no-webp');
+}
+});

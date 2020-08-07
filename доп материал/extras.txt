@@ -1,9 +1,11 @@
+Адрес видео https://www.youtube.com/watch?v=stFOy0Noahg
+
 Уточнения. 
-☝️ У кого проблемы с плагином WEBPCSS нужно установить converter командой -
+☝️ Если проблемы с плагином WEBPCSS нужно установить converter командой -
 npm install webp-converter@2.2.3 --save-dev
 ☝️ Папка проекта не должна называться gulp
 ☝️ Запускать можно и отдельные функции, например gulp css
-☝️ У кого копирует в dist только .jpg попробуйте немного изменить запись форматов с /*.{jpg, png, svg, gif, ico, webp} на /*.+(png|jpg|gif|ico|svg|webp)
+☝️ Если копирует в dist только .jpg попробуйте немного изменить запись форматов с /*.{jpg, png, svg, gif, ico, webp} на /*.+(png|jpg|gif|ico|svg|webp)
 ☝️  Для WEBP-CSS следует использовать настройки: webpcss({webpClass: '.webp',noWebpClass: '.no-webp'}
 ☝️ WEBP-CSS выдает ошибку если в названии файла картинки есть пробелы и/или кириллица
 
